@@ -1,0 +1,293 @@
+<p>Sass is a meta-language on top of CSS that‘s used to describe
+ the style of a document cleanly and structurally, with more power than flat CSS allows. Sass both provides a simpler, more elegant
+  syntax for CSS and implements various features that are useful for creating manageable stylesheets.</p>
+
+<h4>Features</h4>
+<ul>
+    <li> Whitespace active</li>
+    <li> Well-formatted output</li>
+    <li> Elegant input</li>
+    <li> Feature-rich</li>
+</ul>
+
+<h4>CSS Rules</h4>
+<p>
+Rules in flat CSS have two elements: the selector (e.g. &quot;main&quot;,
+&quot;div p&quot;, &quot;li a:hover&quot;) and the attributes (e.g.
+&quot;color: 00ff00;&quot;, &quot;width: 5em;&quot;).
+</p>
+
+<p>
+Sass has both of these, as well as one additional
+element: nested rules.
+
+</p>
+<h3>Rules and Selectors</h3>
+<p>
+However, some of the syntax is a little different. The syntax for selectors
+is the same, but instead of using brackets to delineate the attributes that
+belong to a particular rule, Sass uses two spaces
+of indentation. For example:
+</p>
+<pre>
+  #main p
+    &lt;attribute&gt;
+
+    &lt;attribute&gt;
+
+    ...
+</pre>
+<h3>Attributes</h3>
+<p>
+The syntax for attributes is also slightly different. The colon is at the
+beginning of the attribute, rather than between the name and the value, so
+it&#8216;s easier to tell what elements are attributes just by glancing at
+them. Attributes also don&#8216;t have semicolons at the end; each
+attribute is on its own line, so they aren&#8216;t necessary. For example:
+</p>
+<pre>
+  #main p
+    :color #00ff00
+    :width 97%
+
+</pre>
+<p>
+is compiled to:
+
+</p>
+<pre>
+  #main p {
+    color: #00ff00;
+    width: 97% }
+</pre>
+<h3>Nested Rules</h3>
+<p>
+Rules can also be nested within each other. This signifies that the inner
+rule&#8216;s selector is a child of the outer selector. For example:
+</p>
+<pre>
+  #main p
+    :color #00ff00
+    :width 97%
+
+    .redbox
+      :background-color #ff0000
+      :color #000000
+
+</pre>
+<p>
+is compiled to:
+
+</p>
+<pre>
+  #main p {
+    color: #00ff00;
+    width: 97%; }
+    #main p .redbox {
+      background-color: #ff0000;
+      color: #000000; }
+</pre>
+<p>
+This makes insanely complicated CSS layouts with lots of nested selectors
+very simple:
+</p>
+<pre>
+  #main
+    :width 97%
+
+    p, div
+      :font-size 2em
+      a
+        :font-weight bold
+
+    pre
+      :font-size 3em
+</pre>
+<p>
+is compiled to:
+
+</p>
+<pre>
+  #main {
+    width: 97%; }
+    #main p, #main div {
+      font-size: 2em; }
+      #main p a, #main div a {
+        font-weight: bold; }
+    #main pre {
+      font-size: 3em; }
+
+</pre>
+<h3>Attribute Namespaces</h3>
+<p>
+CSS has quite a few attributes that are in &quot;namespaces;&quot; for
+instance, &quot;font-family,&quot; &quot;font-size,&quot; and
+
+&quot;font-weight&quot; are all in the &quot;font&quot; namespace. In CSS,
+if you want to set a bunch of attributes in the same namespace, you have to
+type it out each time. Sass offers a shortcut for
+this: just write the namespace one, then indent each of the sub-attributes
+within it. For example:
+
+</p>
+<pre>
+  .funky
+    :font
+      :family fantasy
+      :size 30em
+      :weight bold
+</pre>
+<p>
+is compiled to:
+</p>
+
+<pre>
+  .funky {
+    font-family: fantasy;
+    font-size: 30em;
+    font-weight: bold; }
+</pre>
+<h2>Constants</h2>
+<p>
+Sass has support for setting document-wide
+constants. They&#8216;re set using an exclamation mark followed by the
+name, an equals sign, and the value. An attribute can then be set to the
+value of a constant by following it with another equals sign. For example:
+
+</p>
+<pre>
+  !main_color = #00ff00
+
+  #main
+    :color = !main_color
+    :p
+      :background-color = !main_color
+      :color #000000
+</pre>
+<p>
+
+is compiled to:
+</p>
+<pre>
+  #main {
+    color: #00ff00; }
+    #main p {
+      background-color: #00ff00;
+      color: #000000; }
+</pre>
+<h3>Arithmetic</h3>
+<p>
+You can even do basic arithmetic with constants. Sass recognizes numbers, colors, lengths (numbers with
+units), and strings (everything that&#8216;s not one of the above), and
+various operators that work on various values. All the normal arithmetic
+operators (+, -, *, /, %, and parentheses for grouping) are defined as
+usual for numbers, colors, and lengths. The &quot;+&quot; operator is also
+defined for Strings as the concatenation operator. For example:
+
+
+</p>
+<pre>
+  !main_width = 10
+  !unit1 = em
+  !unit2 = px
+  !bg_color = #a5f39e
+
+  #main
+    :background-color = !bg_color
+    p
+      :background-color = !bg_color + #202020
+      :width = !main_width + !unit1
+    img.thumb
+      :width = (!main_width + 15) + !unit2
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    background-color: #a5f39e; }
+    #main p {
+      background-color: #c5ffbe;
+      width: 10em; }
+    #main img.thumb {
+      width: 25em; }
+</pre>
+<h3>Colors</h3>
+<p>
+Not only can arithmetic be done between colors and other colors, but it can
+be done between colors and normal numbers. In this case, the operation is
+done piecewise one each of the Red, Green, and Blue components of the
+color. For example:
+</p>
+
+<pre>
+  !main_color = #a5f39e
+
+  #main
+    :background-color = !main_color
+    p
+      :background-color = !bg_color + 32
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    background-color: #a5f39e; }
+    #main p {
+      background-color: #c5ffbe; }
+</pre>
+<h3>Strings</h3>
+<p>
+Strings are the type that&#8216;s used by default when an element in a bit
+of constant arithmetic isn&#8216;t recognized as another type of constant.
+However, they can also be created explicitly be wrapping a section of code
+with quotation marks. Inside the quotation marks, a backslash can be used
+to escape quotation marks that you want to appear in the CSS. For example:
+
+
+</p>
+<pre>
+  !content = &quot;Hello, \&quot;Hubert\&quot; Bean.&quot;
+
+  #main
+    :content = &quot;string(&quot; + !content + &quot;)&quot;
+
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    content: string(Hello, &quot;Hubert&quot; Bean.) }
+</pre>
+<h3>Default Concatenation</h3>
+<p>
+All those plusses and quotes for concatenating strings can get pretty
+messy, though. Most of the time, if you want to concatenate stuff, you just
+want individual values with spaces in between them. Thus, in Sass, when two values are next to each other without
+an operator, they&#8216;re simply joined with a space. For example:
+
+
+</p>
+<pre>
+  !font_family = "sans-serif"
+  !main_font_size = 1em
+
+  #main
+    :font
+      :family = !font_amily
+      :size = !main_font_size
+    h6
+      :font = italic "small-caps" bold (!main_font_size + 0.1em) !font_family
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    font-family: sans-serif;
+    font-size: 1em; }
+    #main h6 {
+      font: italic small-caps bold 1.1em sans-serif; }
+</pre>
