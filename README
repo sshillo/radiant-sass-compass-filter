@@ -1,5 +1,8 @@
-= Sass Filter
+Created by Sean Shillo
+code.seanshillo.com
 
-Allows you to create DRY CSS in Radiant using Hampton Catlin's wonderful Sass library.
+At present this extension will add a sass filter to the admin ui with syntax error checking
+which is displayed in the admin ui. It is planned to add add the compass and blueprint libraries 
+so the they may be easily included from the admin ui.
 
-See http://haml.hamptoncatlin.com
+I used Sean Cribbs' sass filter as a starting point, many thanks.
