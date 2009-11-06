@@ -2,9 +2,9 @@
 # require_dependency 'application'
 
 class SassCompassFilterExtension < Radiant::Extension
-  version "1.0"
-  description "Allows you to create DRY CSS in Radiant using Hampton Catlin's wonderful Sass library."
-  url "http://haml.hamptoncatlin.com"
+  version ".1"
+  description "Allows you to create sass with error checking"
+  url "http://coding.seanshillo.com"
  
   def activate
     SassCompassFilter
