@@ -1,8 +1,15 @@
 Created by Sean Shillo
 code.seanshillo.com
 
-This filter adds a sass filter to the admin ui. This filter is really only meant to be used
-with pages and page parts. Syntax errors are displayed when used here. The @import statement
+= This filter adds a sass filter to the admin ui. This filter is really only meant to be used
+with pages and page parts. Syntax errors are displayed when used here. 
+
+Usage
+
+Every page with the filter gets filtered to css. For example create a page with slug style.css, that has a stylesheet layout
+use Sass Filter, write your sass code, and style.css can be used by other pages. 
+
+The @import statement
 works with absolute paths from root based upon a pages slug. For example suppose the current page setup also assume slugs are same as name
 /
 --About
@@ -13,6 +20,17 @@ To import About use @import /About
 To import Me use @import About/Me
 There is no checking for the formal sass underscore before imported file and imported files and be named
 whatever you want just remember to base import off the slug.
+
+Note @import will not filter a page twice, if filter is set on imported pages.
+All sass files should use stylesheet type layout where to content is simply rendered.
+
+
+You want to 
+
+
+INSTALL
+download into vendor/extensions
+restart server
 
 I used Sean Cribbs' sass filter as a starting point, many thanks.
 
