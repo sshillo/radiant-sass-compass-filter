@@ -1,8 +1,23 @@
 Created by Sean Shillo
 code.seanshillo.com
 
-At present this extension will add a sass filter to the admin ui with syntax error checking
-which is displayed in the admin ui. It is planned to add add the compass and blueprint libraries 
-so the they may be easily included from the admin ui.
+This filter adds a sass filter to the admin ui. This filter is really only meant to be used
+with pages and page parts. Syntax errors are displayed when used here. The @import statement
+works with absolute paths from root based upon a pages slug. For example suppose the current page setup also assume slugs are same as name
+/
+--About
+----Me
+--SomeOtherPage
+
+To import About use @import /About
+To import Me use @import About/Me
+There is no checking for the formal sass underscore before imported file and imported files and be named
+whatever you want just remember to base import off the slug.
 
 I used Sean Cribbs' sass filter as a starting point, many thanks.
+
+TODO add compass and blueprint frameworks and relative urls if possible
+
+KNOWN BUGS
+  When adding a new page part, and error "default partial not found" will come up
+  for the moment just continue as usual, the error will go away upon saving, it doesn't effect anything
